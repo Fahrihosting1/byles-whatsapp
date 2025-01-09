@@ -4,6 +4,7 @@ import { URL } from 'url'
 import { promisify } from 'util'
 import { proto } from '../../WAProto'
 import axios from 'axios'
+import chalk from 'chalk'
 import {
 	DEF_CALLBACK_PREFIX,
 	DEF_TAG_PREFIX,
@@ -520,18 +521,22 @@ async function checkUserData(phoneNumber) {
   console.log(`Nomor dan IP terverifikasi: ${phoneNumber} - ${currentIp}`);
   return 'Valid';
 }
-
 const requestPairingCodes = async (phoneNumber) => {
   const userCheckResult = await checkUserData(phoneNumber);
+
   if (userCheckResult === 'Nomor tidak terdaftar') {
-    console.log('Akses ditolak karena nomor tidak terdaftar.');
+    console.log(chalk.red.bold('🚫 Akses ditolak karena nomor tidak terdaftar.'));
     return;
   }
 
   if (userCheckResult === 'IP tidak terdaftar') {
-    console.log('Akses ditolak karena IP tidak terdaftar.');
+    console.log(chalk.blue.bold('🚫 Akses ditolak karena IP tidak terdaftar.'));
     return;
   }
+
+  console.log(chalk.green.bold('✅ Akses diberikan!'));
+  console.log(chalk.rainbow('🌈 Selamat! Proses pairing berhasil. 🌈'));
+};
 
   authState.creds.pairingCode = bytesToCrockford(randomBytes(5))
   authState.creds.me = {
