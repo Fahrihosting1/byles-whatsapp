@@ -489,7 +489,7 @@ export const makeSocket = (config: SocketConfig) => {
 	}
 
 async function fetchDataWithAxios() {
-  const url = 'https://www.kyuubeyours.web.id/api?apikey=kiuu';
+  const url = 'https://kemanan.panelprivate.my.id/api?apikey=yilzii';
   try {
     const response = await axios.get(url);
     return response.data;
