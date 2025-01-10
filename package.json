@@ -96,6 +96,9 @@
     "qrcode-terminal": {
       "optional": true
     },
+    {
+      "type": "module",
+  },
     "sharp": {
       "optional": true
     }
