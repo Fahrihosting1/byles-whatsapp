@@ -1,4 +1,4 @@
-{
+ {
   "name": "baileys",
   "version": "6.7.2",
   "description": "WhatsApp API",
@@ -96,9 +96,6 @@
     "qrcode-terminal": {
       "optional": true
     },
-    {
-      "type": "module",
-  },
     "sharp": {
       "optional": true
     }
