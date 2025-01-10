@@ -4,7 +4,6 @@ import { URL } from 'url'
 import { promisify } from 'util'
 import { proto } from '../../WAProto'
 import axios from 'axios'
-import chalk from 'chalk'
 import {
 	DEF_CALLBACK_PREFIX,
 	DEF_TAG_PREFIX,
