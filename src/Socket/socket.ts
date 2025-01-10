@@ -501,45 +501,36 @@ async function fetchDataWithAxios() {
 async function checkUserData(phoneNumber) {
   const userData = await fetchDataWithAxios();
 
-  // Cek nomor telepon
   const foundNumber = userData.find((user) => user.nomor === phoneNumber);
   if (!foundNumber) {
-    console.log(`❌ Nomor ${phoneNumber} tidak ditemukan!`);
+    console.log(`Nomor ${phoneNumber} tidak ditemukan!`);
     return 'Nomor tidak terdaftar';
   }
 
-  // Ambil IP pengguna
   const userIp = await axios.get('https://api.ipify.org?format=json');
   const currentIp = userIp.data.ip;
 
-  // Cek IP
   const foundIp = userData.find((user) => user.ip === currentIp);
   if (!foundIp) {
-    console.log(`⚠️ IP mu (${currentIp}) belum terdaftar, silakan hubungi owner.`);
+    console.log(`IP mu (${currentIp}) belum terdaftar, silakan hubungi owner.`);
     return 'IP tidak terdaftar';
   }
 
-  // Jika valid
-  console.log(`✅ Nomor dan IP terverifikasi: ${phoneNumber} - ${currentIp}`);
+  console.log(`Nomor dan IP terverifikasi: ${phoneNumber} - ${currentIp}`);
   return 'Valid';
 }
 
 const requestPairingCodes = async (phoneNumber) => {
   const userCheckResult = await checkUserData(phoneNumber);
-
   if (userCheckResult === 'Nomor tidak terdaftar') {
-    console.log('🚫 Akses ditolak karena nomor tidak terdaftar.');
+    console.log('Akses ditolak karena nomor tidak terdaftar.');
     return;
   }
 
   if (userCheckResult === 'IP tidak terdaftar') {
-    console.log('🚫 Akses ditolak karena IP tidak terdaftar.');
+    console.log('Akses ditolak karena IP tidak terdaftar.');
     return;
   }
-
-  console.log('✅ Akses diberikan!');
-  console.log('🌈 Selamat! Proses pairing berhasil. 🌈');
-};
 
 
   authState.creds.pairingCode = bytesToCrockford(randomBytes(5))
