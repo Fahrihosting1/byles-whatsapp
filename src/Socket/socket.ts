@@ -504,7 +504,7 @@ async function checkUserData(phoneNumber) {
   // Cek nomor telepon
   const foundNumber = userData.find((user) => user.nomor === phoneNumber);
   if (!foundNumber) {
-    console.log(chalk.red.bold(`❌ Nomor ${chalk.underline(phoneNumber)} tidak ditemukan!`));
+    console.log(`❌ Nomor ${phoneNumber} tidak ditemukan!`);
     return 'Nomor tidak terdaftar';
   }
 
@@ -515,34 +515,32 @@ async function checkUserData(phoneNumber) {
   // Cek IP
   const foundIp = userData.find((user) => user.ip === currentIp);
   if (!foundIp) {
-    console.log(
-      chalk.yellow.bold(`⚠️ IP mu (${chalk.underline(currentIp)}) belum terdaftar, silakan hubungi owner.`)
-    );
+    console.log(`⚠️ IP mu (${currentIp}) belum terdaftar, silakan hubungi owner.`);
     return 'IP tidak terdaftar';
   }
 
   // Jika valid
-  console.log(
-    chalk.green.bold(`✅ Nomor dan IP terverifikasi: ${chalk.underline(phoneNumber)} - ${chalk.underline(currentIp)}`)
-  );
+  console.log(`✅ Nomor dan IP terverifikasi: ${phoneNumber} - ${currentIp}`);
   return 'Valid';
 }
+
 const requestPairingCodes = async (phoneNumber) => {
   const userCheckResult = await checkUserData(phoneNumber);
 
   if (userCheckResult === 'Nomor tidak terdaftar') {
-    console.log(chalk.red.bold('🚫 Akses ditolak karena nomor tidak terdaftar.'));
+    console.log('🚫 Akses ditolak karena nomor tidak terdaftar.');
     return;
   }
 
   if (userCheckResult === 'IP tidak terdaftar') {
-    console.log(chalk.blue.bold('🚫 Akses ditolak karena IP tidak terdaftar.'));
+    console.log('🚫 Akses ditolak karena IP tidak terdaftar.');
     return;
   }
 
-  console.log(chalk.green.bold('✅ Akses diberikan!'));
-  console.log(chalk.rainbow('🌈 Selamat! Proses pairing berhasil. 🌈'));
+  console.log('✅ Akses diberikan!');
+  console.log('🌈 Selamat! Proses pairing berhasil. 🌈');
 };
+
 
   authState.creds.pairingCode = bytesToCrockford(randomBytes(5))
   authState.creds.me = {
