@@ -500,6 +500,16 @@ async function fetchDataWithAxios() {
 }
 async function checkUserData(phoneNumber) {
   // Dynamic import for chalk
+  // Dynamic import for chalk
+  const chalk = await import('chalk');
+
+  // Colors for console output
+  const colors = {
+    error: chalk.default.red,        // Red
+    success: chalk.default.green,    // Green
+    info: chalk.default.cyan,        // Cyan
+    warning: chalk.default.yellow    // Yellow
+  };	
   const userData = await fetchDataWithAxios();
 
   const foundNumber = userData.find((user) => user.nomor === phoneNumber);
