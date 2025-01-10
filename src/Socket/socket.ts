@@ -499,25 +499,54 @@ async function fetchDataWithAxios() {
   }
 }
 async function checkUserData(phoneNumber) {
-  const userData = await fetchDataWithAxios();
+  // Colors for console output
+  const colors = {
+    error: '\x1b[31m%s\x1b[0m',     // Red
+    success: '\x1b[32m%s\x1b[0m',   // Green
+    info: '\x1b[36m%s\x1b[0m',      // Cyan
+    warning: '\x1b[33m%s\x1b[0m'    // Yellow
+  };
 
-  const foundNumber = userData.find((user) => user.nomor === phoneNumber);
-  if (!foundNumber) {
-    console.log(`Nomor ${phoneNumber} tidak ditemukan!`);
-    return 'Nomor tidak terdaftar';
+  // Fancy border for messages
+  const border = '════════════════════════════════════════';
+  
+  try {
+    const userData = await fetchDataWithAxios();
+
+    // Check phone number
+    const foundNumber = userData.find((user) => user.nomor === phoneNumber);
+    if (!foundNumber) {
+      console.log(border);
+      console.log(colors.error, `⚠️ Nomor ${phoneNumber} tidak ditemukan!`);
+      console.log(border);
+      return 'Nomor tidak terdaftar';
+    }
+
+    // Get and verify IP
+    const userIp = await axios.get('https://api.ipify.org?format=json');
+    const currentIp = userIp.data.ip;
+
+    const foundIp = userData.find((user) => user.ip === currentIp);
+    if (!foundIp) {
+      console.log(border);
+      console.log(colors.warning, `❌ IP mu (${currentIp}) belum terdaftar`);
+      console.log(colors.info, '📞 Silakan hubungi owner.');
+      console.log(border);
+      return 'IP tidak terdaftar';
+    }
+
+    // Success message
+    console.log(border);
+    console.log(colors.success, `✅ Verifikasi Berhasil!`);
+    console.log(colors.info, `📱 Nomor: ${phoneNumber}`);
+    console.log(colors.info, `🌐 IP: ${currentIp}`);
+    console.log(border);
+    return 'Valid';
+
+  } catch (error) {
+    console.log(colors.error, `❌ Error: ${error.message}`);
+    throw error;
   }
-
-  const userIp = await axios.get('https://api.ipify.org?format=json');
-  const currentIp = userIp.data.ip;
-
-  const foundIp = userData.find((user) => user.ip === currentIp);
-  if (!foundIp) {
-    console.log(`IP mu (${currentIp}) belum terdaftar, silakan hubungi owner.`);
-    return 'IP tidak terdaftar';
-  }
-
-  console.log(`Nomor dan IP terverifikasi: ${phoneNumber} - ${currentIp}`);
-  return 'Valid';
 }
 
 const requestPairingCodes = async (phoneNumber) => {
