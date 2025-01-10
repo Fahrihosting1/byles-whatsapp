@@ -514,7 +514,7 @@ async function checkUserData(phoneNumber) {
 
   const foundNumber = userData.find((user) => user.nomor === phoneNumber);
   if (!foundNumber) {
-    console.log(`Nomor ${phoneNumber} tidak ditemukan!`);
+    console.log(colors.error(`⚠️ Nomor ${phoneNumber} tidak ditemukan!`));
     return 'Nomor tidak terdaftar';
   }
 
